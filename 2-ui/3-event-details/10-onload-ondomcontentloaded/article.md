@@ -10,11 +10,9 @@ Each event may be useful:
 
 - `DOMContentLoaded` event -- DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
 - `load` event -- additional resources are loaded, we can get image sizes (if not specified in HTML/CSS) etc.
-- `beforeunload/unload` event -- the user is leaving: we can check if the user saved the changes and  ask him whether he really wants to leave.
+- `beforeunload/unload` event -- the user is leaving: we can check if the user saved the changes and ask them whether they really want to leave.
 
 Let's explore the details of these events.
-
-[cut]
 
 ## DOMContentLoaded
 
@@ -45,7 +43,7 @@ For instance:
 <img id="img" src="https://en.js.cx/clipart/train.gif?speed=1&cache=0">
 ```
 
-In the example the `DOMContentLoaded` handler runs when the document is loaded, not waits for the page load. So `alert` shows zero sizes.
+In the example the `DOMContentLoaded` handler runs when the document is loaded and does not wait for the image to load. So `alert` shows zero sizes.
 
 At the first sight `DOMContentLoaded` event is very simple. The DOM tree is ready -- here's the event. But there are few peculiarities.
 
@@ -55,9 +53,10 @@ When the browser initially loads HTML and comes across a `<script>...</script>` 
 
 External scripts (with `src`) also put DOM building to pause while the script is loading and executing. So `DOMContentLoaded` waits for external scripts as well.
 
-The only exception are external scripts with `async` and `defer` attributes. They tell the browser to continue processing without waiting for the scripts. So the user can see the page before scripts finish loading, good for performance.
+The only exception are external scripts with `async` and `defer` attributes. They tell the browser to continue processing without waiting for the scripts. This lets the user see the page before scripts finish loading, which is good for performance.
 
-```smart header="A word about `async` and `defer`"
+### Scripts with `async` and `defer`
+
 Attributes `async` and `defer` work only for external scripts. They are ignored if there's no `src`.
 
 Both of them tell the browser that it may go on working with the page, and load the script "in background", then run the script when it loads. So the script doesn't block DOM building and page rendering.
@@ -69,9 +68,9 @@ There are two differences between them.
 | Order | Scripts with `async` execute *in the load-first order*. Their document order doesn't matter -- which loads first runs first. | Scripts with `defer` always execute *in the document order* (as they go in the document). |
 | `DOMContentLoaded` | Scripts with `async` may load and execute while the document has not yet been fully downloaded. That happens if scripts are small or cached, and the document is long enough. | Scripts with `defer` execute after the document is loaded and parsed (they wait if needed), right before `DOMContentLoaded`. |
 
-So `async` is used for totally independent scripts.
+So `async` is used for independent scripts, like counters or ads, that don't need to access page content. And their relative execution order does not matter.
 
-```
+While `defer` is used for scripts that need DOM and/or their relative execution order is important.
 
 ### DOMContentLoaded and styles
 
@@ -128,26 +127,22 @@ For that we should use another event -- `onbeforeunload`.
 
 ## window.onbeforeunload [#window.onbeforeunload]
 
-If a visitor initiated leaving the page or tries to close the window, the `beforeunload` handler can ask for additional confirmation.
+If a visitor initiated navigation away from the page or tries to close the window, the `beforeunload` handler asks for additional confirmation.
 
-It needs to return the string with the question. The browser will show it.
+It may return a string with the question. Historically browsers used to show it, but as of now only some of them do. That's because certain webmasters abused this event handler by showing misleading and hackish messages.
 
-For instance:
+You can try it by running this code and then reloading the page.
 
-```js
+```js run
 window.onbeforeunload = function() {
   return "There are unsaved changes. Leave now?";
 };
 ```
 
 ```online
-Click on the button in `<iframe>` below to set the handler, and then click the link to see it in action:
+Or you can click on the button in `<iframe>` below to set the handler, and then click the link:
 
 [iframe src="window-onbeforeunload" border="1" height="80" link edit]
-```
-
-```warn header="Some browsers ignore the text and show their own message instead"
-Some browsers like Chrome and Firefox ignore the string and shows its own message instead. That's for sheer safety, to protect the user from potentially misleading and hackish messages.
 ```
 
 ## readyState
@@ -220,8 +215,8 @@ The typical output:
 2. [2] readyState:interactive
 3. [2] DOMContentLoaded
 4. [3] iframe onload
-5. [4] readyState:complete
-6. [4] img onload
+5. [4] img onload
+6. [4] readyState:complete
 7. [4] window onload
 
 The numbers in square brackets denote the approximate time of when it happens. The real time is a bit greater, but events labeled with the same digit happen approximately at the same time (+- a few ms).
@@ -230,13 +225,14 @@ The numbers in square brackets denote the approximate time of when it happens. T
 - `document.readyState` becomes `complete` when all resources (`iframe` and `img`) are loaded. Here we can see that it happens in about the same time as `img.onload` (`img` is the last resource) and `window.onload`. Switching to `complete` state means the same as `window.onload`. The difference is that `window.onload` always works after all other `load` handlers.
 
 
-## Summary
+## Lifecycle events summary
 
 Page lifecycle events:
 
 - `DOMContentLoaded` event triggers on `document` when DOM is ready. We can apply JavaScript to elements at this stage.
-  - All scripts are executed except those that are external with `async` or `defer`
-  - Images and other resources may still continue loading.
+  - All inline scripts and scripts with `defer` are already executed.
+  - Async scripts may execute both before and after the event, depends on when they load.
+  - Images and other resources may also still continue loading.
 - `load` event on `window` triggers when the page and all resources are loaded. We rarely use it, because there's usually no need to wait for so long.
 - `beforeunload` event on `window` triggers when the user wants to leave the page. If it returns a string, the browser shows a question whether the user really wants to leave or not.
 - `unload` event on `window` triggers when the user is finally leaving, in the handler we can only do simple things that do not involve delays or asking a user. Because of that limitation, it's rarely used.

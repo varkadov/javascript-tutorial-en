@@ -6,8 +6,6 @@ Usually, a script "dies" (immediately stops) in case of an error, printing it to
 
 But there's a syntax construct `try..catch` that allows to "catch" errors and, instead of dying, do something more reasonable.
 
-[cut]
-
 ## The "try..catch" syntax
 
 The `try..catch` construct has two main blocks: `try`, and then `catch`:
@@ -81,7 +79,7 @@ Let's see more examples.
 ````warn header="`try..catch` only works for runtime errors"
 For `try..catch` to work, the code must be runnable. In other words, it should be valid JavaScript.
 
-It won't work if the code is syntactically wrong, for instance it has unmatched figure brackets:
+It won't work if the code is syntactically wrong, for instance it has unmatched curly braces:
 
 ```js run
 try {
@@ -98,7 +96,7 @@ So, `try..catch` can only handle errors that occur in the valid code. Such error
 
 
 ````warn header="`try..catch` works synchronously"
-If an exception happens in a "scheduled" code, like in `setTimeout`, then `try..catch` won't catch it:
+If an exception happens in "scheduled" code, like in `setTimeout`, then `try..catch` won't catch it:
 
 ```js run
 try {
@@ -110,7 +108,7 @@ try {
 }
 ```
 
-That's because `try..catch` actually wraps the `setTimeout` call that schedules the function. But the function itself is executed later, when the engine has already have left the `try..catch` construct.
+That's because `try..catch` actually wraps the `setTimeout` call that schedules the function. But the function itself is executed later, when the engine has already left the `try..catch` construct.
 
 To catch an exception inside a scheduled function, `try..catch` must be inside that function:
 ```js run
@@ -172,9 +170,9 @@ try {
 
 Let's explore a real-life use case of `try..catch`.
 
-As we already know, JavaScript supports method [JSON.parse(str)](mdn:js/JSON/parse) to read JSON-encoded values.
+As we already know, JavaScript supports the [JSON.parse(str)](mdn:js/JSON/parse) method to read JSON-encoded values.
 
-Usually it's used to decode the data received over the network, from the server or another source.
+Usually it's used to decode data received over the network, from the server or another source.
 
 We receive it and call `JSON.parse`, like this:
 
@@ -190,13 +188,13 @@ alert( user.name ); // John
 alert( user.age );  // 30
 ```
 
-More detailed information about JSON you can find in the chapter <info:json>.
+You can find more detailed information about JSON in the <info:json> chapter.
 
 **If `json` is malformed, `JSON.parse` generates an error, so the script "dies".**
 
 Should we be satisfied with that? Of course, not!
 
-This way if something's wrong with the data, the visitor will never know that (unless he opens developer console). And people really really don't like when something "just dies" without any error message.
+This way, if something's wrong with the data, the visitor will never know that (unless they open the developer console). And people really don't like when something "just dies" without any error message.
 
 Let's use `try..catch` to handle the error:
 
@@ -220,11 +218,11 @@ try {
 }
 ```
 
-Here we use `catch` block only to show the message, but we can do much more: a new network request, suggest an alternative to the visitor, send the information about the error to a logging facility... All much better than just dying.
+Here we use the `catch` block only to show the message, but we can do much more: send a new network request, suggest an alternative to the visitor, send information about the error to a logging facility, ... . All much better than just dying.
 
 ## Throwing our own errors
 
-What if `json` is syntactically correct... But doesn't have a required `"name"` property?
+What if `json` is syntactically correct, but doesn't have a required `name` property?
 
 Like this:
 
@@ -243,7 +241,7 @@ try {
 }
 ```
 
-Here `JSON.parse` runs normally, but the absence of `"name"` is actually an error for us.
+Here `JSON.parse` runs normally, but the absence of `name` is actually an error for us.
 
 To unify error handling, we'll use the `throw` operator.
 
@@ -257,7 +255,7 @@ The syntax is:
 throw <error object>
 ```
 
-Technically, we can use anything as an error object. That may be even a primitive, like a number or a string, but it's better to use objects, preferrably with `name` and `message` properties (to stay somewhat compatible with built-in errors).
+Technically, we can use anything as an error object. That may be even a primitive, like a number or a string, but it's better to use objects, preferably with `name` and `message` properties (to stay somewhat compatible with built-in errors).
 
 JavaScript has many built-in constructors for standard errors: `Error`, `SyntaxError`, `ReferenceError`, `TypeError` and others. We can use them to create error objects as well.
 
@@ -297,7 +295,7 @@ try {
 
 As we can see, that's a `SyntaxError`.
 
-...And in our case, the absense of `name` could be treated as a syntax error also, assuming that users must have a `"name"`.
+And in our case, the absence of `name` could be treated as a syntax error also, assuming that users must have a `name`.
 
 So let's throw it:
 
@@ -321,7 +319,7 @@ try {
 }
 ```
 
-In the line `(*)` the `throw` operator generates `SyntaxError` with the given `message`, the same way as JavaScript would generate itself. The execution of `try` immediately stops and the control flow jumps into `catch`.
+In the line `(*)`, the `throw` operator generates a `SyntaxError` with the given `message`, the same way as JavaScript would generate it itself. The execution of `try` immediately stops and the control flow jumps into `catch`.
 
 Now `catch` became a single place for all error handling: both for `JSON.parse` and other cases.
 
@@ -340,7 +338,7 @@ try {
   // ...
 } catch(err) {
   alert("JSON Error: " + err); // JSON Error: ReferenceError: user is not defined
-  // (not JSON Error actually)
+  // (no JSON Error actually)
 }
 ```
 
@@ -480,7 +478,7 @@ The code has two ways of execution:
 
 The `finally` clause is often used when we start doing something before `try..catch` and want to finalize it in any case of outcome.
 
-For instance, we want to measure time that a Fibonacci numbers function `fib(n)` takes. Naturally, we can start measuring before it runs and finish afterwards. But what if there's an error during the function call? In particular, the implementation of `fib(n)` in the code below returns an error for negative or non-integer numbers.
+For instance, we want to measure the time that a Fibonacci numbers function `fib(n)` takes. Naturally, we can start measuring before it runs and finish afterwards. But what if there's an error during the function call? In particular, the implementation of `fib(n)` in the code below returns an error for negative or non-integer numbers.
 
 The `finally` clause is a great place to finish the measurements no matter what.
 
@@ -527,7 +525,7 @@ Otherwise, if `let` were made inside the `{...}` block, it would only be visible
 ```
 
 ````smart header="`finally` and `return`"
-Finally clause works for *any* exit from `try..catch`. That includes an explicit `return`.
+The `finally` clause works for *any* exit from `try..catch`. That includes an explicit `return`.
 
 In the example below, there's a `return` in `try`. In this case, `finally` is executed just before the control returns to the outer code.
 
@@ -577,7 +575,7 @@ The information from this section is not a part of the core JavaScript.
 
 Let's imagine we've got a fatal error outside of `try..catch`, and the script died. Like a programming error or something else terrible.
 
-Is there a way to react on such occurrences? We may want to log the error, show something to the user (normally he doesn't see error messages) etc.
+Is there a way to react on such occurrences? We may want to log the error, show something to the user (normally they don't see error messages) etc.
 
 There is none in the specification, but environments usually provide it, because it's really useful. For instance, Node.JS has [process.on('uncaughtException')](https://nodejs.org/api/process.html#process_event_uncaughtexception) for that. And in the browser we can assign a function to special [window.onerror](mdn:api/GlobalEventHandlers/onerror) property. It will run in case of an uncaught error.
 

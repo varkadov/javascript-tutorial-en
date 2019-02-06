@@ -6,8 +6,6 @@ So if we want to track any input into an `<input>` field, then keyboard events a
 
 Keyboard events should be used when we want to handle keyboard actions (virtual keyboard also counts). For instance, to react on arrow keys `key:Up` and `key:Down` or hotkeys (including combinations of keys).
 
-[cut]
-
 
 ## Teststand [#keyboard-test-stand]
 
@@ -125,7 +123,7 @@ function checkPhoneKey(key) {
 <input *!*onkeydown="return checkPhoneKey(event.key)"*/!* placeholder="Phone, please" type="tel">
 ```
 
-Please note that special keys like `key:Backspace`, `key:Left`, `key:Right`, `key:Ctrl+V` do not work in the input. That's a side-effect effect of the strict filter `checkPhoneKey`.
+Please note that special keys like `key:Backspace`, `key:Left`, `key:Right`, `key:Ctrl+V` do not work in the input. That's a side-effect of the strict filter `checkPhoneKey`.
 
 Let's relax it a little bit:
 

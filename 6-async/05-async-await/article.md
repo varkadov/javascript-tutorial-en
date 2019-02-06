@@ -1,10 +1,10 @@
 # Async/await
 
-There's a special syntax to work with promises in a more comfort fashion, called "async/await". It's surprisingly easy to understand and use.
+There's a special syntax to work with promises in a more comfortable fashion, called "async/await". It's surprisingly easy to understand and use.
 
 ## Async functions
 
-Let's start with the `async` keyword. It can be placed before function, like this:
+Let's start with the `async` keyword. It can be placed before a function, like this:
 
 ```js
 async function f() {
@@ -12,7 +12,7 @@ async function f() {
 }
 ```
 
-The word "async" before a function means one simple thing: a function always returns a promise. If the code has `return <non-promise>` in it, then JavaScript automatically wraps it into a resolved promise with that value.
+The word "async" before a function means one simple thing: a function always returns a promise. Even If a function actually returns a non-promise value, prepending the function definition with the "async" keyword directs Javascript to automatically wrap that value in a resolved promise.
 
 For instance, the code above returns a resolved promise with the result of `1`, let's test it:
 
@@ -34,7 +34,7 @@ async function f() {
 f().then(alert); // 1
 ```
 
-So, `async` ensures that the function returns a promise, wraps non-promises in it. Simple enough, right? But not only that. There's another keyword `await` that works only inside `async` functions, and it's pretty cool.
+So, `async` ensures that the function returns a promise, and wraps non-promises in it. Simple enough, right? But not only that. There's another keyword, `await`, that works only inside `async` functions, and it's pretty cool.
 
 ## Await
 
@@ -47,7 +47,7 @@ let value = await promise;
 
 The keyword `await` makes JavaScript wait until that promise settles and returns its result.
 
-Here's example with a promise that resolves in 1 second:
+Here's an example with a promise that resolves in 1 second:
 ```js run
 async function f() {
 
@@ -83,12 +83,12 @@ function f() {
 }
 ```
 
-We can get such error in case if we forget to put `async` before a function. As said, `await` only works inside `async function`.
+We will get this error if we do not put `async` before a function. As said, `await` only works inside an `async function`.
 ````
 
-Let's take `showAvatar()` example from the chapter <info:promise-chaining> and rewrite it using `async/await`:
+Let's take the `showAvatar()` example from the chapter <info:promise-chaining> and rewrite it using `async/await`:
 
-1. We'll need to replace `.then` calls by `await`.
+1. We'll need to replace `.then` calls with `await`.
 2. Also we should make the function `async` for them to work.
 
 ```js run
@@ -122,7 +122,7 @@ showAvatar();
 Pretty clean and easy to read, right? Much better than before.
 
 ````smart header="`await` won't work in the top-level code"
-People who are just starting to use `await` tend to forget that, but we can't write `await` in the top-level code. That wouldn't work:
+People who are just starting to use `await` tend to forget the fact that we can't use `await` in top-level code. For example, this will not work:
 
 ```js run
 // syntax error in top-level code
@@ -133,7 +133,7 @@ let user = await response.json();
 So we need to have a wrapping async function for the code that awaits. Just as in the example above.
 ````
 ````smart header="`await` accepts thenables"
-Like `promise.then`, `await` allows to use thenable objects (those with a callable `then` method). Again, the idea is that a 3rd-party object may be not a promise, but promise-compatible: if it supports `.then`, that's enough to use with `await`.
+Like `promise.then`, `await` allows to use thenable objects (those with a callable `then` method). Again, the idea is that a 3rd-party object may not be a promise, but promise-compatible: if it supports `.then`, that's enough to use with `await`.
 
 For instance, here `await` accepts `new Thenable(1)`:
 ```js run
@@ -183,7 +183,7 @@ The meaning is the same: it ensures that the returned value is a promise and ena
 ````
 ## Error handling
 
-If a promise resolves normally, then `await promise` returns the result. But in case of a rejection it throws the error, just if there were a `throw` statement at that line.
+If a promise resolves normally, then `await promise` returns the result. But in case of a rejection, it throws the error, just as if there were a `throw` statement at that line.
 
 This code:
 
@@ -205,7 +205,7 @@ async function f() {
 }
 ```
 
-In real situations the promise may take some time before it rejects. So `await` will wait, and then throw an error.
+In real situations, the promise may take some time before it rejects. So `await` will wait, and then throw an error.
 
 We can catch that error using `try..catch`, the same way as a regular `throw`:
 

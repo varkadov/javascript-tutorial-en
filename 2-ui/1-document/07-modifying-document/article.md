@@ -6,11 +6,9 @@ Here we'll see how to create new elements "on the fly" and modify the existing p
 
 First we'll see a simple example and then explain the methods.
 
-[cut]
-
 ## Example: show a message
 
-For the start, let's see how to add a message on the page that looks nicer than `alert`.
+For a start, let's see how to add a message on the page that looks nicer than `alert`.
 
 Here's how it will look:
 
@@ -32,7 +30,7 @@ Here's how it will look:
 */!*
 ```
 
-That was an HTML example. Now let's create the same `div` with JavaScript (assuming that the styles are still in the HTML or an external CSS).
+That was an HTML example. Now let's create the same `div` with JavaScript (assuming that the styles are still in the HTML or an external CSS file).
 
 ## Creating an element
 
@@ -63,7 +61,7 @@ div.className = "alert alert-success";
 div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
 ```
 
-After that, we have a ready DOM element. Right now it's in the variable, but can not be seen, because not inserted into the page yet.
+After that, we have our DOM element ready. Right now it is just in a variable and we cannot see it. That is because it's not yet inserted into the page.
 
 ## Insertion methods
 
@@ -137,9 +135,8 @@ Here's a brief list of methods to insert a node into a parent element (`parentEl
     */!*
     </script>
     ```
-
-    To insert as the first element, we can do like this:
-
+    To insert `newLi` as the first element, we can do it like this:
+    
     ```js
     list.insertBefore(newLi, list.firstChild);
     ```
@@ -153,7 +150,7 @@ These methods are "old school": they exist from the ancient times and we can mee
 
 For instance, how to insert *html* if we have it as a string? Or, given a node, how to insert another node *before* it? Of course, all that is doable, but not in an elegant way.
 
-So there exists two other sets of insertion methods to handle all cases easily.
+So there exist two other sets of insertion methods to handle all cases easily.
 
 ### prepend/append/before/after
 
@@ -206,7 +203,7 @@ before
 after
 ```
 
-These methods can insert multiple list of nodes and text pieces in a single call.
+These methods can insert multiple lists of nodes and text pieces in a single call.
 
 For instance, here a string and an element are inserted:
 
@@ -239,7 +236,7 @@ But what if we want to insert HTML "as html", with all tags and stuff working, l
 
 There's another, pretty versatile method: `elem.insertAdjacentHTML(where, html)`.
 
-The first parameter is a string, specifying where to insert, must be one of the following:
+The first parameter is a string, specifying where to insert. Must be one of the following:
 
 - `"beforebegin"` -- insert `html` before `elem`,
 - `"afterbegin"` -- insert `html` into `elem`, at the beginning,
@@ -276,10 +273,10 @@ We can easily notice similarities between this and the previous picture. The ins
 
 The method has two brothers:
 
-- `elem.insertAdjacentText(where, text)` -- the same syntax, but a string of `text` in inserted "as text" instead of HTML,
+- `elem.insertAdjacentText(where, text)` -- the same syntax, but a string of `text` is inserted "as text" instead of HTML,
 - `elem.insertAdjacentElement(where, elem)` -- the same syntax, but inserts an element.
 
-They exist mainly to make the syntax "uniform". In practice, most of time only `insertAdjacentHTML` is used, because for elements and text we have methods `append/prepend/before/after` -- they are shorter to write and can insert nodes/text pieces.
+They exist mainly to make the syntax "uniform". In practice, only `insertAdjacentHTML` is used most of the time. Because for elements and text, we have methods `append/prepend/before/after` -- they are shorter to write and can insert nodes/text pieces.
 
 So here's an alternative variant of showing a message:
 
@@ -305,7 +302,7 @@ So here's an alternative variant of showing a message:
 
 How to insert one more similar message?
 
-We could do a function and put the code there. But the alternative way would be to *clone* the existing `div` and modify the text inside it (if needed).
+We could make a function and put the code there. But the alternative way would be to *clone* the existing `div` and modify the text inside it (if needed).
 
 Sometimes when we have a big element, that may be faster and simpler.
 
@@ -340,7 +337,7 @@ An example of copying the message:
 
 ## Removal methods
 
-To remove nodes, there are following methods:
+To remove nodes, there are the following methods:
 
 
 `parentElem.removeChild(node)`
@@ -412,9 +409,9 @@ The syntax:
 
 The call to `document.write(html)` writes the `html` into page "right here and now". The `html` string can be dynamically generated, so it's kind of flexible. We can use JavaScript to create a full-fledged webpage and write it.
 
-The method comes from times when there were no DOM, no standards... Really old times. It still lives, because there are scripts using it.
+The method comes from times when there was no DOM, no standards... Really old times. It still lives, because there are scripts using it.
 
-In modern scripts we can rarely see it, because of the important limitation.
+In modern scripts we can rarely see it, because of the following important limitation:
 
 **The call to `document.write` only works while the page is loading.**
 
@@ -482,4 +479,4 @@ Insertion and removal of nodes:
 - To append HTML to the page before it has finished loading:
   - `document.write(html)`
 
-  After the page is loaded such call erases the document. Mostly seen in old scripts.
+  After the page is loaded such a call erases the document. Mostly seen in old scripts.

@@ -4,8 +4,6 @@ Forms and control elements, such as `<input>` have a lot of special properties a
 
 Working with forms can be much more convenient if we know them.
 
-[cut]
-
 ## Navigation: form and elements
 
 Document forms are members of the special collection `document.forms`.
@@ -265,7 +263,7 @@ Option elements have additional properties:
 : The number of the option among the others in its `<select>`.
 
 `text`
-: Text content of the option (seen by what the visitor).
+: Text content of the option (seen by the visitor).
 ```
 
 ## Summary

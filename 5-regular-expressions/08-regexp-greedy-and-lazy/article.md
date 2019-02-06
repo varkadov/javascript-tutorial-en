@@ -4,8 +4,6 @@ Quantifiers are very simple from the first sight, but in fact they can be tricky
 
 We should understand how the search works very well if we plan to look for something more complex than `pattern:/\d+/`.
 
-[cut]
-
 Let's take the following task as an example.
 
 We have a text and need to replace all quotes `"..."` with guillemet marks: `«...»`. They are preferred for typography in many countries.
@@ -175,7 +173,7 @@ Complex regular expressions are hard to optimize, so the search may work exactly
 
 ## Alternative approach
 
-With regexps, there's often more then one way to do the same thing.
+With regexps, there's often more than one way to do the same thing.
 
 In our case we can find quoted strings without lazy mode using the regexp `pattern:"[^"]+"`:
 

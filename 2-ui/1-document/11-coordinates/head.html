@@ -1,8 +1,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-  document.getElementById('coords-show-mark').onclick = function() {
-    let elem = document.getElementById("coords-show-mark");
+let elem = document.getElementById('coords-show-mark');
+
+// no elem in ebook mode
+if (elem) {
+  elem.onclick = function() {
 
     function createMessageUnder(elem, text) {
       let coords = elem.getBoundingClientRect();
@@ -21,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.append(message);
     setTimeout(() => message.remove(), 5000);
   }
+}
 
 });
 

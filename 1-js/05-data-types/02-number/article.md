@@ -201,7 +201,7 @@ Strange! What is it then if not `0.3`?
 alert( 0.1 + 0.2 ); // 0.30000000000000004
 ```
 
-Ouch! There are more consequences than an incorrect comparison here. Imagine you're making an e-shopping site and the visitor puts `$0.10` and `$0.20` goods into his chart. The order total will be `$0.30000000000000004`. That would surprise anyone.
+Ouch! There are more consequences than an incorrect comparison here. Imagine you're making an e-shopping site and the visitor puts `$0.10` and `$0.20` goods into their chart. The order total will be `$0.30000000000000004`. That would surprise anyone.
 
 But why does this happen?
 
@@ -249,10 +249,10 @@ Can we work around the problem? Sure, there're a number of ways:
 2. We can temporarily turn numbers into integers for the maths and then revert it back. It works like this:
 
     ```js run
-    alert( (0.1*10 + 0.2*10) / 10 ); // 0.3
+    alert( (0.1 * 10 + 0.2 * 10) / 10 ); // 0.3
     ```
 
-    This works because when we do `0.1*10 = 1` and `0.2 * 10 = 2` then both numbers become integers, and there's no precision loss. 
+    This works because when we do `0.1 * 10 = 1` and `0.2 * 10 = 2` then both numbers become integers, and there's no precision loss. 
 
 3. If we were dealing with a shop, then the most radical solution would be to store all prices in cents and use no fractions at all. But what if we apply a discount of 30%? In practice, totally evading fractions is rarely feasible, so the solutions above help avoid this pitfall.
 
@@ -270,7 +270,7 @@ JavaScript doesn't trigger an error in such events. It does its best to fit the 
 ````
 
 ```smart header="Two zeroes"
-Another funny consequence of the internal representation of numbers is the existance of two zeroes: `0` and `-0`.
+Another funny consequence of the internal representation of numbers is the existence of two zeroes: `0` and `-0`.
 
 That's because a sign is represented by a single bit, so every number can be positive or negative, including a zero. 
 
@@ -283,7 +283,7 @@ In most cases the distinction is unnoticeable, because operators are suited to t
 
 Remember these two special numeric values?
 
-- `Infinite` (and `-Infinite`) is a special numeric value that is greater (less) than anything.
+- `Infinity` (and `-Infinity`) is a special numeric value that is greater (less) than anything.
 - `NaN` represents an error.
 
 They belong to the type `number`, but are not "normal" numbers, so there are special functions to check for them:
@@ -349,7 +349,7 @@ But in real life we often have values in units, like `"100px"` or `"12pt"` in CS
 
 That's what `parseInt` and `parseFloat` are for.
 
-They "read" a number from a string until they can. In case of an error, the gathered number is returned. The function `parseInt` returns an integer, whilst `parseFloat` will return a floating-point number:
+They "read" a number from a string until they can't. In case of an error, the gathered number is returned. The function `parseInt` returns an integer, whilst `parseFloat` will return a floating-point number:
 
 ```js run
 alert( parseInt('100px') ); // 100

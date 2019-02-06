@@ -9,8 +9,6 @@ window.open('http://javascript.info/')
 
 ... And it will open a new window with given URL. Most modern browsers are configured to open new tabs instead of separate windows.
 
-[cut]
-
 ## Popup blocking
 
 Popups exist from really ancient times. The initial idea was to show another content without closing the main window. As of now, there are other ways to do that: JavaScript is able to send requests for server, so popups are rarely used. But sometimes they are still handy.
@@ -178,7 +176,7 @@ Still, there are some things that can be done.
 For instance:
 
 - When we open a popup, it's might be a good idea to run a `newWindow.focus()` on it. Just in case, for some OS/browser combinations it ensures that the user is in the new window now.
-- If we want to track when a visitor actually uses our web-app, we can track `window.onfocus/onblur`. That allows us to suspend/resume in-page activities, animations etc. But please note that the `blur` event means that the visitor switched out from the window, but he still may observe it. The window is in the background, but still may be visible.
+- If we want to track when a visitor actually uses our web-app, we can track `window.onfocus/onblur`. That allows us to suspend/resume in-page activities, animations etc. But please note that the `blur` event means that the visitor switched out from the window, but they still may observe it. The window is in the background, but still may be visible.
 
 ## Summary   
 

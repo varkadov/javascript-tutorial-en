@@ -3,9 +3,7 @@
 
 As we know, objects can store properties.
 
-Till now, a property was a simple "key-value" pair to us. But an object property is actually more complex and tunable thing.
-
-[cut]
+Till now, a property was a simple "key-value" pair to us. But an object property is actually a more complex and tunable thing.
 
 ## Property flags
 
@@ -15,7 +13,7 @@ Object properties, besides a **`value`**, have three special attributes (so-call
 - **`enumerable`** -- if `true`, then listed in loops, otherwise not listed.
 - **`configurable`** -- if `true`, the property can be deleted and these attributes can be modified, otherwise not.
 
-We didn't see them yet, because generally they do not show up. When we create a property "the usual way", all of them are `true`. But we also can change them any time.
+We didn't see them yet, because generally they do not show up. When we create a property "the usual way", all of them are `true`. But we also can change them anytime.
 
 First, let's see how to get those flags.
 
@@ -120,7 +118,7 @@ user.name = "Pete"; // Error: Cannot assign to read only property 'name'...
 */!*
 ```
 
-Now no one can change the name of our user, unless he applies his own `defineProperty` to override ours.
+Now no one can change the name of our user, unless they apply their own `defineProperty` to override ours.
 
 Here's the same operation, but for the case when a property doesn't exist:
 
@@ -156,7 +154,7 @@ let user = {
 };
 
 // By default, both our properties are listed:
-for(let key in user) alert(key); // name, toString
+for (let key in user) alert(key); // name, toString
 ```
 
 If we don't like it, then we can set `enumerable:false`. Then it won't appear in `for..in` loop, just like the built-in one:
@@ -178,7 +176,7 @@ Object.defineProperty(user, "toString", {
 *!*
 // Now our toString disappears:
 */!*
-for(let key in user) alert(key); // name
+for (let key in user) alert(key); // name
 ```
 
 Non-enumerable properties are also excluded from `Object.keys`:
@@ -193,7 +191,7 @@ The non-configurable flag (`configurable:false`) is sometimes preset for built-i
 
 A non-configurable property can not be deleted or altered with `defineProperty`.
 
-For instance, `Math.PI` is both read-only, non-enumerable and non-configurable:
+For instance, `Math.PI` is read-only, non-enumerable and non-configurable:
 
 ```js run
 let descriptor = Object.getOwnPropertyDescriptor(Math, 'PI');
@@ -282,7 +280,7 @@ let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
 Normally when we clone an object, we use an assignment to copy properties, like this:
 
 ```js
-for(let key in user) {
+for (let key in user) {
   clone[key] = user[key]
 }
 ```

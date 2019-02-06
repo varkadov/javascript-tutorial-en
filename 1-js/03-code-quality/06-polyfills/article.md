@@ -19,7 +19,7 @@ Here Babel comes to the rescue.
 
 Actually, there are two parts in Babel:
 
-1. First, the transpiler program, which rewrites the code. The developer runs it on his own computer. It rewrites the code into the older standard. And then the code is delivered to the website for users. Modern project build system like [webpack](http://webpack.github.io/) or [brunch](http://brunch.io/) provide means to run transpiler automatically on every code change, so that doesn't involve any time loss from our side.
+1. First, the transpiler program, which rewrites the code. The developer runs it on their own computer. It rewrites the code into the older standard. And then the code is delivered to the website for users. Modern project build system like [webpack](http://webpack.github.io/) or [brunch](http://brunch.io/) provide means to run transpiler automatically on every code change, so that doesn't involve any time loss from our side.
 
 2. Second, the polyfill.
 
@@ -46,7 +46,7 @@ alert('Press the "Play" button in the upper-right corner to run');
 ```
 
 Examples that use modern JS will work only if your browser supports it.
-```
+````
 
 ```offline
 As you're reading the offline version, examples are not runnable. But they usually work :)

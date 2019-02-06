@@ -1,13 +1,11 @@
 # Styles and classes
 
-Before we get to JavaScript ways of dealing with styles and classes -- here's an important rule. Hopefully it's obvious enough, but we still have to mention it.
+Before we get into JavaScript's ways of dealing with styles and classes -- here's an important rule. Hopefully it's obvious enough, but we still have to mention it.
 
 There are generally two ways to style an element:
 
 1. Create a class in CSS and add it: `<div class="...">`
 2. Write properties directly into `style`: `<div style="...">`.
-
-[cut]
 
 CSS is always the preferred way -- not only for HTML, but in JavaScript as well.
 
@@ -26,7 +24,7 @@ For other cases, like making the text red, adding a background icon -- describe 
 
 ## className and classList
 
-Changing a class is one of the most often actions in scripts.
+Changing a class is one of the most often used actions in scripts.
 
 In the ancient time, there was a limitation in JavaScript: a reserved word like `"class"` could not be an object property. That limitation does not exist now, but at that time it was impossible to have a `"class"` property, like `elem.class`.
 
@@ -76,7 +74,7 @@ Besides that, `classList` is iterable, so we can list all classes like this:
 ```html run
 <body class="main page">
   <script>
-    for(let name of document.body.classList) {
+    for (let name of document.body.classList) {
       alert(name); // main, and then page
     }
   </script>
@@ -127,7 +125,7 @@ document.body.style.display = "none"; // hide
 setTimeout(() => document.body.style.display = "", 1000); // back to normal
 ```
 
-If we set `display` to an empty string, then the browser applies CSS classes and its built-in styles normally, as if there were no such `style` property at all.
+If we set `display` to an empty string, then the browser applies CSS classes and its built-in styles normally, as if there were no such `display` property at all.
 
 ````smart header="Full rewrite with `style.cssText`"
 Normally, we use `style.*` to assign individual style properties. We can't set the full style like `div.style="color: red; width: 100px"`, because `div.style` is an object, and it's read-only.
@@ -149,7 +147,7 @@ To set the full style as a string, there's a special property `style.cssText`:
 </script>
 ```
 
-We rarely use it, because such assignment removes all existing styles: it does not add, but replaces them. May occasionally delete something needed. But still can be done for new elements when we know we don't delete something important.
+We rarely use it, because such assignment removes all existing styles: it does not add, but replaces them. May occasionally delete something needed. But still can be done for new elements when we know we won't delete something important.
 
 The same can be accomplished by setting an attribute: `div.setAttribute('style', 'color: red...')`.
 ````
@@ -209,7 +207,7 @@ For instance, here `style` doesn't see the margin:
 </body>
 ```
 
-...But what if we need, say, increase the margin by 20px? We want the current value for the start.
+...But what if we need, say, to increase the margin by 20px? We want the current value for the start.
 
 There's another method for that: `getComputedStyle`.
 
@@ -223,7 +221,7 @@ element
 : Element to read the value for.
 
 pseudo
-: A pseudo-element if required, for instance `::before`. An empty string or no argument mean the element itself.
+: A pseudo-element if required, for instance `::before`. An empty string or no argument means the element itself.
 
 The result is an object with style properties, like `elem.style`, but now with respect to all CSS classes.
 
@@ -250,10 +248,10 @@ For instance:
 ```smart header="Computed and resolved values"
 There are two concepts in [CSS](https://drafts.csswg.org/cssom/#resolved-values):
 
-1. A *computed* style value is the value after all CSS rules and CSS inheritance is applied, as the  result of the CSS cascade. If can look like `height:1em` or `font-size:125%`.
+1. A *computed* style value is the value after all CSS rules and CSS inheritance is applied, as the  result of the CSS cascade. It can look like `height:1em` or `font-size:125%`.
 2. A *resolved* style value is the one finally applied to the element. Values like `1em` or `125%` are relative. The browser takes the computed value and makes all units fixed and absolute, for instance: `height:20px` or `font-size:16px`. For geometry properties resolved values may have a floating point, like `width:50.5px`.
 
-Long time ago `getComputedStyle` was created to get computed values, but it turned out that resolved values are much more convenient, and the standard changed.
+A long time ago `getComputedStyle` was created to get computed values, but it turned out that resolved values are much more convenient, and the standard changed.
 
 So nowadays `getComputedStyle` actually returns the resolved value of the property.
 ```
@@ -283,7 +281,7 @@ Visited links may be colored using `:visited` CSS pseudoclass.
 
 But `getComputedStyle` does not give access to that color, because otherwise an arbitrary page could find out whether the user visited a link by creating it on the page and checking the styles.
 
-JavaScript we may not see the styles applied by `:visited`. And also, there's a limitation in CSS that forbids to apply geometry-changing styles in `:visited`. That's to guarantee that there's no side way for an evil page to test if a link was visited and hence to break the privacy.
+JavaScript we may not see the styles applied by `:visited`. And also, there's a limitation in CSS that forbids to apply geometry-changing styles in `:visited`. That's to guarantee that there's no sideway for an evil page to test if a link was visited and hence to break the privacy.
 ```
 
 ## Summary

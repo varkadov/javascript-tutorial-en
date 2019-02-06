@@ -7,8 +7,6 @@ There are two sets of methods to deal with regular expressions.
 
 The structure is a bit messed up, so we'll first consider methods separately, and then -- practical recipes for common tasks.
 
-[cut]
-
 ## str.search(reg)
 
 We've seen this method already. It returns the position of the first match or `-1` if none found:
@@ -153,7 +151,7 @@ We can use special characters in it:
 |`$&`|the whole match|
 |<code>$&#096;</code>|a part of the string before the match|
 |`$'`|a part of the string after the match|
-|`$n`|if `n` is a 1-2 digit number, then it means the contents of n-th parentheses counting fro left to right|
+|`$n`|if `n` is a 1-2 digit number, then it means the contents of n-th parentheses counting from left to right|
 
 For instance let's use `$&` to replace all entries of `"John"` by `"Mr.John"`:
 
@@ -236,7 +234,7 @@ Using a function gives us the ultimate replacement power, because it gets all th
 
 Let's move on to the methods of `RegExp` class, that are callable on regexps themselves.
 
-The `test` method looks for any match and returns `true/false` whether he found it.
+The `test` method looks for any match and returns `true/false` whether they found it.
 
 So it's basically the same as `str.search(reg) != -1`, for instance:
 

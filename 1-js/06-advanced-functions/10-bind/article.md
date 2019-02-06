@@ -9,8 +9,6 @@ When using `setTimeout` with object methods or passing object methods along, the
 
 Suddenly, `this` just stops working right. The situation is typical for novice developers, but happens with experienced ones as well.
 
-[cut]
-
 ## Losing "this"
 
 We already know that in JavaScript it's easy to lose `this`. Once a method is passed somewhere separately from the object -- `this` is lost.
@@ -45,7 +43,7 @@ The task is quite typical -- we want to pass an object method somewhere else (he
 
 ## Solution 1: a wrapper
 
-The simplest solution is to use an wrapping function:
+The simplest solution is to use a wrapping function:
 
 ```js run
 let user = {
@@ -72,7 +70,7 @@ setTimeout(() => user.sayHi(), 1000); // Hello, John!
 
 Looks fine, but a slight vulnerability appears in our code structure.
 
-What if before `setTimeout` triggers (there's one second delay!) `user` changes value? Then, suddenly, the it will call the wrong object!
+What if before `setTimeout` triggers (there's one second delay!) `user` changes value? Then, suddenly, it will call the wrong object!
 
 
 ```js run
